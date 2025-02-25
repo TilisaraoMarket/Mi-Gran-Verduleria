@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Gran Verdulería - Mario Nievas</title>
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --accent: #22c55e;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --success: #16a34a;
+            --warning: #eab308;
+            --error: #dc2626;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header y Navegación */
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 1.5rem 1rem;
+            position: relative;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .cart-button {
+            background: var(--warning);
+            color: var(--text);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') center/cover;
+            padding: 6rem 1rem;
+            position: relative;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Productos */
+        .products-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .quantity-input {
+            width: 80px;
+            padding: 0.5rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .add-to-cart {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            flex: 1;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Juego */
+        .game-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            padding: 4rem 1rem;
+            color: var(--white);
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .game-area {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .game-item {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .game-item:hover {
+            transform: scale(1.1);
+        }
+
+        /* Carrito Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .cart-items {
+            margin: 2rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+        }
+
+        .copy-order {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-order:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text);
+            color: var(--white);
+            padding: 4rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: var(--gray-300);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .developer-info {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--gray-700);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .game-area {
+                height: 300px;
+            }
+        }
+        .brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+        }
+
+        .owner-tag {
+            font-size: 0.9rem;
+            color: var(--gray-200);
+            margin-top: -5px;
+        }
+
+        .developer-info {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .developer-info p {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+        }
+
+        .developer-info a {
+            color: var(--gray-200);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .developer-info a:hover {
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="brand-container">
+                <a href="#" class="brand">Mi Gran Verdulería</a>
+                <span class="owner-tag">By Mario Nievas</span>
+            </div>
+            <button class="cart-button" id="cartBtn">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Carrito (0)</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Frutas y Verduras Frescas</h1>
+            <p>Calidad y frescura garantizada todos los días</p>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <h2 class="section-title">Nuestros Productos</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Los productos se cargarán dinámicamente -->
+        </div>
+    </section>
+
+    <section class="game-section">
+        <div class="game-container">
+            <h2>¡Juega y Gana Descuentos!</h2>
+            <p>Atrapa las frutas y verduras para ganar puntos</p>
+            <div class="game-area" id="gameArea"></div>
+            <button class="add-to-cart" id="startGame">Iniciar Juego</button>
+            <p id="gameScore">Puntos: 0</p>
+        </div>
+    </section>
+
+    <!-- Modal Carrito -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCart">&times;</button>
+            <h2>Tu Carrito</h2>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: $0</div>
+            <button class="copy-order" id="copyOrder">
+                Copiar Pedido para WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Ubicación</h3>
+                <p>Calle Principal 25 de Mayo y Renca<br>Tilisarao, San Luis<br>Argentina</p>
+            </div>
+            <div class="footer-section">
+                <h3>Horarios</h3>
+                <p>Lunes a Sábado<br>8:00 - 20:00</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>WhatsApp: +54 9 2665-118-400</p>
+                <div class="social-links">
+                    <a href="https://wa.link/v671jn"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="developer-info">
+            <p>Desarrollado por <a href="https://tilisaraomarket.github.io/WebDev-Solutions/" target="_blank" style="color: #ffffff; text-decoration: none; transition: color 0.3s ease;">WebDev Solutions</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de productos
+        const products = [
+            {
+                id: 1,
+                name: "Manzanas",
+                price: 100,
+                image: "https://images.pexels.com/photos/1510392/pexels-photo-1510392.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            {
+                id: 2,
+                name: "Bananas",
+                price: 80,
+                image: "https://images.pexels.com/photos/1093038/pexels-photo-1093038.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            {
+                id: 3,
+                name: "Tomates",
+                price: 90,
+                image: "https://images.pexels.com/photos/1327838/pexels-photo-1327838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            {
+                id: 4,
+                name: "Zanahorias",
+                price: 70,
+                image: "https://images.pexels.com/photos/143133/pexels-photo-143133.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            {
+                id: 5,
+                name: "Almendras",
+                price: 200,
+                image: "https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            },
+            {
+                id: 6,
+                name: "Mix Frutos Secos",
+                price: 250,
+                image: "https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            }
+        ];
+
+        // Carrito
+        let cart = [];
+
+        // Renderizar productos
+        function renderProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-price">$${product.price}/kg</p>
+                        <div class="product-actions">
+                            <input type="number" min="1" value="1" class="quantity-input" id="qty-${product.id}">
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Agregar al carrito
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value);
+            
+            if (quantity > 0) {
+                cart.push({
+                    ...product,
+                    quantity,
+                    total: product.price * quantity
+                });
+                updateCartButton();
+            }
+        }
+
+        // Actualizar botón del carrito
+        function updateCartButton() {
+            document.querySelector('#cartBtn span').textContent = `Carrito (${cart.length})`;
+        }
+
+        // Renderizar carrito
+        function renderCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            let total = 0;
+
+            cartItems.innerHTML = cart.map(item => {
+                total += item.total;
+                return `
+                    <div class="cart-item">
+                        <span>${item.quantity}kg ${item.name}</span>
+                        <span>$${item.total}</span>
+                    </div>
+                `;
+            }).join('');
+
+            cartTotal.textContent = `Total: $${total}`;
+        }
+
+        // Copiar pedido
+        function copyOrder() {
+            let message = "🛒 *Mi Pedido:*\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                message += `• ${item.quantity}kg ${item.name} - $${item.total}\n`;
+                total += item.total;
+            });
+
+            message += `\n💰 *Total: $${total}*\n`;
+            message += "\n📍 Por favor, confirma mi pedido y horario de entrega.";
+
+            navigator.clipboard.writeText(message).then(() => {
+                alert('¡Pedido copiado! Ahora puedes pegarlo en WhatsApp.');
+            });
+        }
+
+        // Juego
+        let gameScore = 0;
+        let gameInterval;
+
+        function startGame() {
+            gameScore = 0;
+            document.getElementById('gameScore').textContent = `Puntos: ${gameScore}`;
+            document.getElementById('startGame').disabled = true;
+
+            gameInterval = setInterval(createGameItem, 1000);
+            setTimeout(() => {
+                clearInterval(gameInterval);
+                document.getElementById('startGame').disabled = false;
+                alert(`¡Juego terminado! Puntuación final: ${gameScore}`);
+            }, 30000);
+        }
+
+        function createGameItem() {
+            const gameArea = document.getElementById('gameArea');
+            const item = document.createElement('img');
+            item.src = products[Math.floor(Math.random() * products.length)].image;
+            item.className = 'game-item';
+            
+            const maxX = gameArea.clientWidth - 60;
+            const maxY = gameArea.clientHeight - 60;
+            
+            item.style.left = Math.random() * maxX + 'px';
+            item.style.top = Math.random() * maxY + 'px';
+            
+            item.addEventListener('click', () => {
+                gameScore++;
+                document.getElementById('gameScore').textContent = `Puntos: ${gameScore}`;
+                gameArea.removeChild(item);
+            });
+            
+            gameArea.appendChild(item);
+            
+            setTimeout(() => {
+                if (gameArea.contains(item)) {
+                    gameArea.removeChild(item);
+                }
+            }, 2000);
+        }
+
+        // Event Listeners
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            document.getElementById('cartModal').style.display = 'flex';
+            renderCart();
+        });
+
+        document.getElementById('closeCart').addEventListener('click', () => {
+            document.getElementById('cartModal').style.display = 'none';
+        });
+
+        document.getElementById('copyOrder').addEventListener('click', copyOrder);
+        document.getElementById('startGame').addEventListener('click', startGame);
+
+        // Inicialización
+        renderProducts();
+    </script>
+</body>
+</html>
